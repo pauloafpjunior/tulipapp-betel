@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>
+      <img style="width: 24px; height: 24px; margin: auto;" src="assets/imgs/logo.png" /> TulipApp
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="changeNotification()">
+        <ion-icon name="notifications-off" *ngIf="!notification"></ion-icon>
+        <ion-icon name="notifications" *ngIf="notification"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Carregando boletins...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-card *ngFor="let bul of bulletins">
+    <ion-card-header text text-center  class="post-date">
+      <h2>
+        <strong>{{bul.title}}</strong>
+      </h2>
+      <i>{{bul.subtitle}}</i>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row  (click)="viewBulletin(bul.id)">
+        <ion-col>
+          <img style="height: 15em; width: auto; margin: auto;" src="{{bul.image}}" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button ion-button full clear icon-only (click)="addFavorite(bul)">
+            <ion-icon name="star-outline"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button full clear icon-only (click)="shareBulletin(bul)">
+            <ion-icon name="share"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

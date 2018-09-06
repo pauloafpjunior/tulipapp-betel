@@ -1,0 +1,8 @@
+{
+  "name": "tulipapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "f9715194"
+}

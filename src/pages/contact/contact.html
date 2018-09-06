@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar color="dark" #mycontent>
+    <ion-title>
+      <img style="width: 24px; height: 24px; margin: auto;" src="assets/imgs/logo.png" /> TulipApp
+    </ion-title>
+    <button ion-button menuToggle end>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+</ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="current_section != null">
+    <ion-card-header text text-center class="post-date">
+      <h2>
+        <strong>{{current_section.title}}</strong>
+      </h2>
+    </ion-card-header>
+    <ion-card-content padding>
+      <div [innerHtml]="current_section.content"></div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-menu [content]="mycontent" persistent="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Boletim</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item menuClose *ngFor="let sec of sections" (click)="changeCurrentSection(sec)">
+        <img style="width: 16px; height: 16px; margin: auto;" src="{{sec.icon}}" /> {{sec.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
