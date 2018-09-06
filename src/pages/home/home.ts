@@ -144,7 +144,7 @@ export class HomePage {
     ).catch(
       (error) => {
         // First use of storage
-        this.notification = false;
+        this.notification = true;
         this.localProvider.setNotification(this.notification);
       }
     );
