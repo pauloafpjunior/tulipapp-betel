@@ -30,6 +30,7 @@ export class HomePage {
       browser: {}
     };
 
+    this.notification = false;
     this.pushObject = this.push.init(options);
     this.pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.bul_id) {
@@ -139,13 +140,11 @@ export class HomePage {
           this.pushObject.subscribe('tulip_org_6');
         } else {
           this.pushObject.unsubscribe('tulip_org_6');
+          this.createToastMessage("Ative as notificações saber quando há novos boletins!");
         }
       }
     ).catch(
       (error) => {
-        // First use of storage
-        this.notification = true;
-        this.localProvider.setNotification(this.notification);
       }
     );
 
