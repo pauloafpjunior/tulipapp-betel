@@ -20,6 +20,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { SharingProvider } from '../providers/sharing/sharing';
 import { Push } from '@ionic-native/push';
+import { SafeStylePipe } from '../pipes/safe-style/safe-style';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { Push } from '@ionic-native/push';
     FavoritesPage,
     HomePage,
     TabsPage,
+    SafeStylePipe,
     TimeAgoPipe
   ],
   imports: [

@@ -17,7 +17,7 @@
       </h2>
     </ion-card-header>
     <ion-card-content padding>
-      <div [innerHtml]="current_section.content"></div>
+      <div [innerHtml]="current_section.content | safeStyle"></div>
     </ion-card-content>
   </ion-card>
 </ion-content>
