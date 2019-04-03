@@ -4,16 +4,15 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 @Injectable()
 export class SharingProvider {
 
-  private BASE_SHARING_URL: string = 'http://ec2-18-222-213-66.us-east-2.compute.amazonaws.com/bulletins/view/';
+  private BASE_SHARING_URL: string = 'https://ec2-54-233-120-231.sa-east-1.compute.amazonaws.com/tulipweb/bulletins/view/';
 
   constructor(private socialSharing: SocialSharing) {
-    
+
   }
 
   shareBulletin(bulletin) {
     let msg = bulletin.title + " | " + bulletin.subtitle;
     let bulletin_url = this.BASE_SHARING_URL + bulletin.id;
-    return this.socialSharing.share(msg, 'TulipApp', bulletin.image, bulletin_url);
+    return this.socialSharing.share(msg, 'TulipApp', null, 'https://ec2-54-233-120-231.sa-east-1.compute.amazonaws.com/tulipweb/bulletins/view/6');
   }
-
 }

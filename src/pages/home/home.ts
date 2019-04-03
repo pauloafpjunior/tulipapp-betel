@@ -15,6 +15,8 @@ export class HomePage {
   public bulletins: any;
   public notification: boolean;
   private pushObject: PushObject;
+  private page: number;
+  public query: string;
 
   constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private sharingProvider: SharingProvider,
     private restProvider: RestProvider, private localProvider: LocalProvider, private toastCtrl: ToastController,
@@ -30,11 +32,12 @@ export class HomePage {
       browser: {}
     };
 
-    this.notification = false;
+    this.notification = true;
+    this.page = 1;
     this.pushObject = this.push.init(options);
     this.pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.bul_id) {
-        this.navCtrl.push(ContactPage, {          
+        this.navCtrl.push(ContactPage, {
           bul_id: notification.additionalData.bul_id
         });
       } else {
@@ -44,15 +47,31 @@ export class HomePage {
 
   }
 
-  doRefresh(refresher) {
+  doRefresh(event?) {
     this.restProvider.getBulletins().subscribe(
       (data) => {
         this.bulletins = data;
-        refresher.complete();
+        if (event) event.complete();
       }, (error) => {
         this.createToastMessage("Não foi possível carregar as informações...");
       }
     );
+  }
+
+  doInfinite(event) {
+    if (!this.query || this.query.trim().length < 3) {
+      this.page = this.page + 1;
+      this.restProvider.getBulletins(this.page).subscribe(
+        (data) => {
+          this.bulletins = this.bulletins.concat(data);
+          event.complete();
+        }, (error) => {
+          this.createToastMessage("Não foi possível carregar as informações...");
+        }
+      );
+    } else {
+      event.complete();
+    }
   }
 
   private createToastMessage(msg) {
@@ -120,6 +139,24 @@ export class HomePage {
     return loading;
   }
 
+  searchBulletins(event) {
+    if (this.query && this.query.trim().length >= 3) {
+      let loading = this.createLoading("Buscando boletins...");
+      loading.present();
+      this.restProvider.getBulletins(null, this.query).subscribe(
+        (data) => {
+          loading.dismiss();
+          this.bulletins = data;
+        }, (error) => {
+          loading.dismiss();
+          this.createToastMessage("Não foi possível carregar as informações...");
+        }
+      );
+    } else {
+      this.doRefresh();
+    }
+  }
+
   changeNotification() {
     this.notification = !this.notification;
     this.localProvider.setNotification(this.notification);
@@ -150,7 +187,7 @@ export class HomePage {
 
     let loading = this.createLoading("Carregando boletins...");
     loading.present();
-    this.restProvider.getBulletins().subscribe(
+    this.restProvider.getBulletins(this.page).subscribe(
       (data) => {
         loading.dismiss();
         this.bulletins = data;

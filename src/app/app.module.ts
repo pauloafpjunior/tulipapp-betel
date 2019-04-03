@@ -1,4 +1,3 @@
-import { Deeplinks } from '@ionic-native/deeplinks';
 import { FavoritesPage } from './../pages/favorites/favorites';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,13 +13,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpClientModule } from '@angular/common/http';
 import { RestProvider } from '../providers/rest/rest';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { LocalProvider } from '../providers/local/local';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { SharingProvider } from '../providers/sharing/sharing';
 import { Push } from '@ionic-native/push';
 import { SafeStylePipe } from '../pipes/safe-style/safe-style';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 @NgModule({
   declarations: [
@@ -53,11 +53,11 @@ import { SafeStylePipe } from '../pipes/safe-style/safe-style';
     SplashScreen,
     Deeplinks,
     SocialSharing,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     RestProvider,
     LocalProvider,
     Push,
     SharingProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }
